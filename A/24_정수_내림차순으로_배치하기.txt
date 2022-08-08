@@ -1,0 +1,79 @@
+# 24번 문제
+## 정수 내림차순으로 배치하기
+
+## 문제 설명
+함수 solution은 정수 n을 매개변수로 입력받습니다. 
+n의 각 자릿수를 큰것부터 작은 순으로 정렬한 새로운 정수를 리턴해주세요. 
+예를들어 n이 118372면 873211을 리턴하면 됩니다.
+
+## 제한 조건
+n은 1이상 8000000000 이하인 자연수입니다.
+
+## 입출력 예
+   n	return
+118372	873211
+
+## 코드
+
+### 1 
+class Solution {
+    public long solution(long n) {
+        String s =""+n;
+        int [] ss = new int [s.length()];
+        for(int i=0; i<s.length(); i++){
+            ss[i] = s.charAt(i) - '0';
+        }
+        for (int i = 0; i < ss.length; i++) {
+
+            for (int j = i + 1; j < ss.length; j++) {
+
+                if (ss[i] < ss[j]) {
+                    int temp = ss[i];
+                    ss[i] = ss[j];
+                    ss[j] = temp;
+                }
+            }
+        }
+        int num = 0;
+        for(int digit:ss){
+            num*=10; num += digit;
+        }
+        return num;
+    }
+}
+
+2
+import java.util.Arrays;
+class Solution {
+    public long solution(long n) {
+        String s = String.valueOf(n); 
+        String ansnum= "";
+        Long answer;
+        char [] arr = new char[s.length()];
+        for(int i=0; i<s.length(); i++){
+            arr[i] +=s.charAt(i);
+        }
+        Arrays.sort(arr);
+        for(int i = arr.length-1; i>=0; i--){
+            ansnum+=arr[i];
+            System.out.println(ansnum);
+        }
+        answer = Long.parseLong(ansnum);
+
+        for(int i:arr){
+            System.out.println(i);
+        }
+        return answer;
+    }
+}
+
+## 풀이
+1번은 처음 도전한 코드인데 테스트는 통과했으나 채점에서 떨어졌다.
+2번 코드풀이는
+Line 1. 정수n을 String으로 변환
+Line 4. arr라는 문자배열을 n의 길이만큼 선언
+Line 6. n을 하나하나 쪼개 arr배열에 입력
+Line 8. Arrays.sort(arr)를 이용해 오름차순 정렬
+Line 10. for문을 이용해 마지막 인덱스부터 
+ansnum이라는 문자열에 '+'를 이용해 거꾸로 하나씩 붙여줌
+Line 13. 다시 정수로 변환

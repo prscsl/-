@@ -1,0 +1,55 @@
+# 21번 문제
+## 이상한 문자 만들기
+
+## 문제 설명
+문자열 s는 한 개 이상의 단어로 구성되어 있습니다. 
+각 단어는 하나 이상의 공백문자로 구분되어 있습니다. 
+각 단어의 짝수번째 알파벳은 대문자로, 
+홀수번째 알파벳은 소문자로 바꾼자열을 리턴하는 함수, solution을 완성하세요.
+
+## 제한 사항
+문자열 전체의 짝/홀수 인덱스가 아니라,
+단어(공백을 기준)별로 짝/홀수 인덱스를 판단해야합니다.
+첫 번째 글자는 0번째 인덱스로 보아 짝수번째 알파벳으로 처리해야 합니다.
+
+
+## 입출력 예
+          s	                     return
+"try hello world"	"TrY HeLlO WoRlD"
+
+## 코드
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        String[] str = s.split("");
+        
+        int idx = 0; //인덱스
+        for(int i=0; i<str.length; i++){
+            if(str[i].equals(" ")){ //띄어쓰기 있다면
+                idx = 0; //인덱스 0 초기화
+            }
+            else if(idx % 2 == 0){ //idx가 짝수면
+                str[i] = str[i].toUpperCase(); //대문자로 변경
+                idx++; //idx 증가
+            }
+            else if(idx % 2 != 0){ //idx가 홀수면
+                str[i] = str[i].toLowerCase(); //소문자로 변경
+                idx++; //idx 증가
+            }
+            answer += str[i];
+        }
+        return answer;
+    }
+}
+
+## 풀이
+s를 하나식 읽어오기 위해 String 배열에 s 를 넣고
+띄어쓰기마다 인덱스를 초기화해야하므로 idx 변수를 만들어주고 for문을 생성합니다.
+String 형은 == 사용시 null 참조 오류가 발생할 수 있으므로 equals로 비교하고 
+공백을 찾습니다. 공백이 있다면 idx는 0으로 초기화 합니다.
+idx가 짝수이면 toUpperCase(); 함수로 대문자로 변경하고 idx가 홀수이면 
+toLowerCase(); 함수로 소문자로 변경합니다. 이후 idx를 증가시켜 띄어쓰기
+이후 홀, 짝을 비교할 수 있도록 합니다.
+for문 루프가 한번식 돌기 전마다 str[i]를 answer 에 적용합니다.
+이런식으로 계속 루프가 돌면 문제에서 원하는 문자가 answer에 저장되고 
+answer을 return 합니다.
