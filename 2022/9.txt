@@ -1,0 +1,1440 @@
+# 9번 문제
+## 핸드폰 번호 가리기
+프로그래머스 모바일은 개인정보 보호를 위해 고지서를 보낼 때 고객들의 
+전화번호의 일부를 가립니다. 전화번호가 문자열 phone_number로 주어졌을 때, 
+전화번호의 뒷 4자리를 제외한 나머지 숫자를 전부 *으로 가린 문자열을 리턴하는 함수, 
+solution을 완성해주세요.
+
+## 제한조건
+- s는 길이 4이상, 20이하인 문자열입니다.
+
+## 입출력 예
+phone_number	return
+"01033334444"	"*******4444"
+"027778888	"*****8888"
+ 
+## 코드
+### 1.
+class Solution {
+   public String solution(String phone_number) {
+   String answer = "";
+    for(int i = 0; i < phone_number.length(); i++){
+     if(i < phone_number.length()-4){
+       answer += "*";
+    }
+      else{
+      answer += phone_number.charAt(i);
+    }
+      }
+      return answer;
+  }
+}
+
+### 2.
+class Solution {
+    public String solution(String phone_number) {		 
+	StringBuilder answer = new StringBuilder(phone_number);
+		 
+	for(int i = 0; i < phone_number.length()-4; i++) {
+		answer.setCharAt(i, '*');
+	}
+	return answer.toString();
+    }
+
+## 코드풀이
+ for문 안에 if을 이용하여 폰 넘버 문자열-4까지는 *를 더하고
+ 이후 마지막 4자리는 폰넘버에서 charAt함수를 사용해 가져다 더했다.
+
+### 2.
+코드를 풀고 봤을때 인상깊었던 코드다. StringBuilder를 이용해 생각보다 쉽게 풀이하였다.
+StringBuilder : String 객체를 더할 때 새로운 객체를 생성하는 것이 아니기 때문에 
+상대적으로 속도도 빠르고 메모리도 효율적으로 이용할 수 있다.
+
+뒷 4자리는 무조건 숫자가 표현되어야 하므로 phone_number.length()-4을 해준다.
+
+StringBuilder의 내장 함수setCharAt(int index, char ch)를 사용하여 주어진 
+인덱스에 있는 문자를 주어진 문자로 바꿔준다.
+
+StringBuilder는 문자열을 뽑아낼 때 .toString()을 사용한다.
+
+
+
+# @10번 문제
+## 행렬의 덧셈
+행렬의 덧셈은 행과 열의 크기가 같은 두 행렬의 같은 행, 
+같은 열의 값을 서로 더한 결과가 됩니다. 2개의 행렬 arr1과 arr2를 입력받아, 
+행렬 덧셈의 결과를 반환하는 함수, solution을 완성해주세요.
+
+## 제한조건
+- 행렬 arr1, arr2의 행과 열의 길이는 500을 넘지 않습니다
+
+## 입출력 예
+arr1	   arr2	     return
+[[1,2],[2,3]] [[3,4],[5,6]]   [[4,6],[7,9]]
+[[1],[2]]	  [[3],[4]]	      [[4],[6]]
+
+## 코드
+class Solution {
+    public int[][] solution(int[][] arr1, int[][] arr2) {
+        int[][] answer = new int[arr1.length][arr1[0].length];
+        
+        for(int i = 0; i<arr1.length; i++) {
+            for(int j = 0; j<arr1[0].length; j++){
+                answer[i][j] = arr1[i][j] + arr2[i][j];
+            }
+        }
+        return answer;
+    }
+}
+
+## 풀이
+이중 for문을 이용해 for문 하나는 행, 다른 하나는 열을 돌렸다.
+두 배열의 행[0]열[0] 행[0]열[1] 을 더하고 행이 올라가야 하는 만큼
+열을 증가시킬 때 answer 배열에 답을 넣어주는 것이다
+이후 배열의 크기에 맞춰 반복문을 쭉 돌려주면 끝이 난다
+/여담
+sumMatrix사용방법도 있다.
+
+
+# 11번 문제
+## x만큼 간격이 있는 n개의 숫자
+함수 solution은 정수 x와 자연수 n을 입력 받아,
+ x부터 시작해 x씩 증가하는 숫자를 n개 지니는 리스트를 리턴해야 합니다. 
+다음 제한 조건을 보고, 조건을 만족하는 함수, solution을 완성해주세요.
+
+## 제한 조건
+- x는 -10000000 이상, 10000000 이하인 정수입니다.
+- n은 1000 이하인 자연수입니다.
+
+## 입출력 예
+x	n	answer
+2	5	[2,4,6,8,10]
+4	3	[4,8,12]
+-4	2	[-4, -8]
+
+## 코드
+
+### 1번
+class Solution {
+    public long[] solution(int x, int n) {
+        long[] answer = new long[n];
+        long num = x;
+        for(int i=0; i<answer.length; i++) {
+            num += x;
+            answer[i] = num;
+            
+        }
+        return answer;
+    }
+}
+
+### 2번
+class Solution {
+    public static long[] solution(int x, int n) {
+        long[] answer = new long[n];
+        answer[0] = x;
+
+        for (int i = 1; i < n; i++) {
+            answer[i] = answer[i - 1] + x;
+        }
+
+        return answer;
+
+    }
+}
+
+## 풀이
+answer 배열에 새롭게 n 변수만큼 배열을 초기화시켜주고
+num 변수에 x값을 더하고 answer[i]번째의 num 변수를 대입시킨다.
+다음 for문을 통해 answer.length로 배열만큼 반복하고
+answer[i]마다 num을 대입시킨다 
+2번 코드는 1번 코드 내용이 간결해지고 더 직관적이길래 첨부하였다.
+
+# 12번 문제
+## 부족한 금액 계산하기
+새로 생긴 놀이기구는 인기가 매우 많아 줄이 끊이질 않습니다. 
+이 놀이기구의 원래 이용료는 price원 인데, 놀이기구를 N 번 째 이용한다면 
+원래 이용료의 N배를 받기로 하였습니다. 즉, 처음 이용료가 100이었다면 2번째에는 200,
+3번째에는 300으로 요금이 인상됩니다. 놀이기구를 count번 타게 되면 현재 자신이 
+가지고 있는 금액에서 얼마가 모자라는지를 return 하도록 solution 함수를 완성하세요.
+단, 금액이 부족하지 않으면 0을 return 하세요.
+
+## 제한사항
+- 놀이기구의 이용료 price : 1 ≤ price ≤ 2,500, price는 자연수
+- 처음 가지고 있던 금액 money : 1 ≤ money ≤ 1,000,000,000, money는 자연수
+- 놀이기구의 이용 횟수 count : 1 ≤ count ≤ 2,500, count는 자연수
+
+## 입출력 예
+price	money	count	result
+3	20	4	10
+
+## 코드
+
+class Solution {
+    public long solution(int price, int money, int count) {
+        long sum = 0;
+        for(int i = 1; i <= count; i++)
+        {
+            sum += i * price;            
+        }
+        
+        if (sum > money)
+            return sum-money;
+        
+        else return 0;
+
+    }
+}
+
+## 풀이
+먼저 총합을 넣어줄 변수 sum을 만듭니다.
+다음 conut만큼 for문을 반복하면서 sum에다가 i*price를 더합니다.
+if문으로 sum임 money보다 더 클경우 sum-money를 리턴하고
+만약 그렇지않으면 0을 리턴하게되겠습니다.
+/여담
+등차수열 배우기
+Math.max 함수는 두개의 인자 중 큰값을 리턴하는 함수
+
+
+# 13번 문제
+## 2016년
+2016년 1월 1일은 금요일입니다. 2016년 a월 b일은 무슨 요일일까요? 
+두 수 a ,b를 입력받아 2016년 a월 b일이 무슨 요일인지 리턴하는 함수, 
+solution을 완성하세요. 요일의 이름은 일요일부터 토요일까지 
+각각 SUN,MON,TUE,WED,THU,FRI,SAT입니다. 예를 들어 a=5, b=24라면 
+5월 24일은 화요일이므로 문자열 "TUE"를 반환하세요.
+
+## 제한 조건
+- 2016년은 윤년입니다.
+- 2016년 a월 b일은 실제로 있는 날입니다. 
+  (13월 26일이나 2월 45일같은 날짜는 주어지지 않습니다)
+
+## 입출력 예
+a	b	result
+5	24	"TUE"
+
+## 코드
+
+class Solution {
+    public String solution(int a, int b) {
+        String[] day = {"FRI", "SAT", "SUN", "MON", "TUE", "WED", "THU"};
+        int[] month = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};        
+
+        int date = 0;
+        for (int i = 0; i < a - 1; i++) {
+            date += month[i];
+        }
+
+        date += b - 1;
+
+        return day[date % 7];
+    }
+}
+### 2.
+return LocalDate.of(2016,a,b).getDayOfWeek().toString().substring(0.3)
+
+## 풀이
+1월 1일이 금요일 이므로, 금요일부터 시작하여 요일 이름을 저장.
+모든 날짜를 더해 % 7로 나눠준다.
+배열은 0부터 시작이므로 a - 1까지 모든 월의 일수를 더한다.
+b - 1을 더함으로 1월 1일부터 a월 b일까지 모든 날짜를 더한 값을 얻는다.
+2번 식
+LocalDate.of (x,y,z)
+getDayOfWeek() 요일을 구하는 함수
+toString() 객체정보를 문자형으로 형변화 해주는 함수
+
+
+
+# @14번 문제
+## 나누어 떨어지는 숫자 배열
+array의 각 element 중 divisor로 나누어 떨어지는 값을 오름차순으로 
+정렬한 배열을 반환하는 함수, solution을 작성해주세요.
+divisor로 나누어 떨어지는 element가 하나도 없다면 배열에 -1을 담아 반환하세요.
+
+
+
+## 제한사항
+- arr은 자연수를 담은 배열입니다.
+- 정수 i, j에 대해 i ≠ j 이면 arr[i] ≠ arr[j] 입니다.
+- divisor는 자연수입니다.
+- array는 길이 1 이상인 배열입니다.
+
+## 입출력 예
+arr	         divisor	return
+[5, 9, 7, 10]	5	[5, 10]
+[2, 36, 1, 3]	1	[1, 2, 3, 36]
+[3,2,6]	           10	[-1]
+
+## 코드
+class Solution {
+    public int[] solution(int[] arr, int divisor) {
+        
+        int cnt = 0;
+        for(int i = 0; i < arr.length; i++){
+            if(arr[i] % divisor == 0) cnt++;
+        }
+
+        if(cnt == 0) {
+            int[] answer = {-1};
+            return answer;
+        } 
+        
+        int[] answer = new int[cnt];
+        
+        for(int i = 0, j = 0; i < arr.length; i++){
+            if(arr[i] % divisor == 0) answer[j++] = arr[i]; 
+        }
+        
+       for(int i = 0; i < cnt - 1; i++){
+            for(int j = 0; j < cnt - 1 - i; j++){
+                if(answer[j] > answer[j +1]){
+                    int temp = answer[j];
+                    answer[j] = answer[j+1];
+                    answer[j+1] = temp;
+                }
+            }
+        }
+        
+        return answer;
+    }
+}
+
+### 2번 
+ return Arrays.stream(array).filter(factor -> factor % divisor == 0).toArray();}
+
+## 풀이
+배열 길이를 구하고 나누어 떨어지는 값이 없으면 배열값 -1 반환
+구한 배열길이 만큼 배열을 선언하고 나누어 떨어지는 값은 배열에 저장하고
+정렬한다.
+2번 코드는 그저 아름답기만 하다...
+
+
+
+# 15번 문제
+내적
+길이가 같은 두 1차원 정수 배열 a, b가 매개변수로 주어집니다. 
+a와 b의 내적을 return 하도록 solution 함수를 완성해주세요.
+
+이때, a와 b의 내적은 a[0]*b[0] + a[1]*b[1] + ... + a[n-1]*b[n-1] 입니다. (n은 a, b의 길이)
+
+## 제한사항
+- a, b의 길이는 1 이상 1,000 이하입니다.
+- a, b의 모든 수는 -1,000 이상 1,000 이하입니다.
+
+## 입출력 예
+a	     b	     result
+[1,2,3,4]	[-3,-1,0,2]        3
+[-1,0,1]	[1,0,-1]	       -2
+
+class Solution {
+    public int solution(int[] a, int[] b) {
+        int answer = 0;
+        
+        for(int i =0;i<a.length;i++){
+            answer+=(a[i]*b[i]);
+        }
+        
+        return answer;
+    }
+}
+
+## 풀이
+동일한 i값을 a,b에게 넣어 해당 값들을 더해준다.
+/여담으로 내적의 개념부터 다시 알아봐야했다...
+인문학계열을 선택한 이래로 수학을 멀리했던 나를 반성할 수밖에 없었다...
+
+
+# 16번 문제
+## 문자열 내 q와 y의 개수
+
+## 문제 설명
+대문자와 소문자가 섞여있는 문자열 s가 주어집니다. 
+s에 'p'의 개수와 'y'의 개수를 비교해 같으면 True, 다르면 False를 return 하는 
+solution를 완성하세요. 'p', 'y' 모두 하나도 없는 경우는 항상 True를 리턴합니다. 
+단, 개수를 비교할 때 대문자와 소문자는 구별하지 않습니다.
+
+예를 들어 s가 "pPoooyY"면 true를 return하고 "Pyy"라면 false를 return합니다.
+
+## 제한사항
+- 문자열 s의 길이 : 50 이하의 자연수
+- 문자열 s는 알파벳으로만 이루어져 있습니다.
+
+## 입출력 예
+s	           answer
+"pPoooyY"	true
+"Pyy"	            false
+
+## 코드
+
+### 1.
+class Solution {
+    boolean solution(String s) {
+         boolean answer = true;
+        int p = 0;
+        int y = 0;
+        for(int i = 0; i<s.length() ; i++){
+            if(s.charAt(i)=='p' || s.charAt(i)=='P'){
+                p++;
+            }else if(s.charAt(i)=='y' || s.charAt(i)=='Y') {
+                y++;
+            }
+        }
+        if(p!=y){
+            answer=false;
+        }
+        return answer;
+    }
+}
+
+### 2.
+class Solution {
+    boolean solution(String s) {
+        s = s.toUpperCase();
+
+        return s.chars().filter( e -> 'P'== e).count() == s.chars().filter( e -> 'Y'== e).count();
+    }
+}
+
+
+
+## 풀이
+p,y개수를 넣어줄 변수를 만들고, for문으로 s.length()만큼 반복 시행
+if문으로 s.charAt(i)이 p나 P일 경우 변수 p++ 이와 같은 방식으로 y도 실시
+for문 이후 if문으로 p!=y일때 false대입하여 출력 아닐 경우 true
+2번 코드는 람다식을 이용하여 한줄로 간단하게 구현한 코드다. 
+람다식을 공부하자! 그럼 더 재미있게 할 수있을 것 같아 조금 두근거린다!
+
+
+
+# @ 17번 문제
+## 문자열 다루기 기본
+
+## 문제 설명
+문자열 s의 길이가 4 혹은 6이고, 숫자로만 구성돼있는지 확인해주는 함수, 
+solution을 완성하세요. 예를 들어 s가 "a234"이면 False를 리턴하고 "1234"라면
+ True를 리턴하면 됩니다.
+
+## 제한 사항
+- s는 길이 1 이상, 길이 8 이하인 문자열입니다.
+- s는 영문 알파벳 대소문자 또는 0부터 9까지 숫자로 이루어져 있습니다.
+
+## 입출력 예
+   s	return
+"a234"	false
+"1234"	true
+
+## 코드
+
+class Solution {
+    public boolean solution(String s) {
+        if(s.length() != 4 && s.length() != 6) return false;
+        for (int i=0;i<s.length();i++) {
+            if (s.charAt(i) < '0' || s.charAt(i) > '9') return false;
+        }        
+        return true;
+    }
+}
+
+## 풀이
+먼저 길이가 4미만 6초과인 경우는 무조건 false 리턴
+for문으로 문자열만큼 i 반복 i번째 문자가 0보다 작거나 9보다 크면
+문자로 판단하고 false 리턴 그외에 경우만 true 리턴
+
+
+
+# 18번 문제
+## 서울에서 김서방 찾기
+
+## 문제 설명
+String형 배열 seoul의 element중 "Kim"의 위치 x를 찾아, 
+"김서방은 x에 있다"는 String을 반환하는 함수, solution을 완성하세요. 
+seoul에 "Kim"은 오직 한 번만 나타나며 잘못된 값이 입력되는 경우는 없습니다.
+
+## 제한 사항
+- seoul은 길이 1 이상, 1000 이하인 배열입니다.
+- seoul의 원소는 길이 1 이상, 20 이하인 문자열입니다.
+- "Kim"은 반드시 seoul 안에 포함되어 있습니다.
+
+## 입출력 예
+     seoul	                    return
+["Jane", "Kim"]	"김서방은 1에 있다"
+
+## 코드 
+
+class Solution {
+    public String solution(String[] seoul) {
+        String answer = "";
+        for(int i=0; i<seoul.length; i++) {
+            if(seoul[i].equals("Kim")) {
+                answer = "김서방은 " + i + "에 있다";
+            }
+        }
+        
+        return answer;
+    }
+}
+
+## 풀이
+for문으로 seoul.length만큼 i를 반복 
+if문으로 seoul[i]가 kim이면 answer에 대입
+/여담으로 나머진 다맞았는데 .equals몰라서 == 써서 계속 헤맸다.
+
+
+
+
+# 19번 문제
+## 수박수박수박수박수박수
+
+## 문제 설명
+길이가 n이고, "수박수박수박수...."와 같은 패턴을 유지하는 문자열을 리턴하는 함수,
+ solution을 완성하세요. 예를들어 n이 4이면 "수박수박"을 
+리턴하고 3이라면 "수박수"를 리턴하면 됩니다.
+
+## 제한 조건
+-  n은 길이 10,000이하인 자연수입니다.
+
+## 입출력 예
+n	return
+3	"수박수"
+4	"수박수박"
+
+## 코드
+### 1.
+class Solution {
+    public String solution(int n) {
+        String na = "";
+        for(int i = 0; i<n; i++){
+           if(i%2==0){
+               na +="수";
+           }if(i%2==1){
+               na +="박";
+           }
+        }
+        return na;
+    }
+}
+
+### 2.
+   String text =
+     " 수박수박수박~n한계치까지"
+
+  public String solution(int n) {
+      String answer = text.substring(0, n);
+      return answer;
+
+## 풀이
+for문으로 n만큼 반복수행
+2로 나눠졌을때 나머지가 0이면 수
+1이 나머지로 남으면 박
+결과값담는 변수에 담으면 끝
+2번은 재미도있었지만 수가 작다면 이렇게 할만하다는
+생각이 들어서 첨부하였다.
+
+
+
+# 20번 문제
+## 완주하지 못한 선수
+
+## 문제 설명
+수많은 마라톤 선수들이 마라톤에 참여하였습니다. 
+단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.
+
+마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 
+완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 
+완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.
+
+## 제한사항
+- 마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
+- completion의 길이는 participant의 길이보다 1 작습니다.
+- 참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
+- 참가자 중에는 동명이인이 있을 수 있습니다.
+
+## 입출력 예
+    participant	                                                  completion	              return
+["leo", "kiki", "eden"]	                                  ["eden", "kiki"]	               "leo"
+["marina", "josipa", "nikola", "vinko", "filipa"]	["josipa", "filipa", "marina", "nikola"]	 "vinko"
+["mislav", "stanko", "mislav", "ana"]	                 ["stanko", "ana", "mislav"]	             "mislav"
+
+## 코드
+import java.util.Arrays;
+
+class Solution {
+    public String solution(String[] participant, String[] completion) {
+        String answer = "";
+        
+        Arrays.sort(participant);
+        Arrays.sort(completion);
+        
+        for(int i = 0; i < completion.length; i++) {
+            if(!(participant[i].equals(completion[i])) {
+                answer = participant[i];
+                break;
+            }
+            if(i == completion.length-1) answer = participant[i+1];
+        }
+        
+        return answer;
+    }
+}
+
+## 풀이
+완주자 목록이 참가자 목록보다 배열이 하나 적기에
+완주자 목록 기준으로 for문을 돌린다.
+그리고 완주자와 참가자 목록 i번째를 비교했을때 같지가 않으면
+우리가 찾던 인물임으로 answer에 대입한다.
+만약 마지막 반복일때까지 같으면 참가자 목록 마지막 인물이 우리가 찾던
+인물임으로 그 참가자를 answer에 넣으면 된다.
+/여담으로 
+Arrays를 사용하려면 import해야한다는걸 몰라서 한참을 헤맸다.
+
+
+
+# 21번 문제
+## 이상한 문자 만들기
+
+## 문제 설명
+문자열 s는 한 개 이상의 단어로 구성되어 있습니다. 
+각 단어는 하나 이상의 공백문자로 구분되어 있습니다. 
+각 단어의 짝수번째 알파벳은 대문자로, 
+홀수번째 알파벳은 소문자로 바꾼자열을 리턴하는 함수, solution을 완성하세요.
+
+## 제한 사항
+문자열 전체의 짝/홀수 인덱스가 아니라,
+단어(공백을 기준)별로 짝/홀수 인덱스를 판단해야합니다.
+첫 번째 글자는 0번째 인덱스로 보아 짝수번째 알파벳으로 처리해야 합니다.
+
+
+## 입출력 예
+          s	                     return
+"try hello world"	"TrY HeLlO WoRlD"
+
+## 코드
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        String[] str = s.split("");
+        
+        int idx = 0; //인덱스
+        for(int i=0; i<str.length; i++){
+            if(str[i].equals(" ")){ //띄어쓰기 있다면
+                idx = 0; //인덱스 0 초기화
+            }
+            else if(idx % 2 == 0){ //idx가 짝수면
+                str[i] = str[i].toUpperCase(); //대문자로 변경
+                idx++; //idx 증가
+            }
+            else if(idx % 2 != 0){ //idx가 홀수면
+                str[i] = str[i].toLowerCase(); //소문자로 변경
+                idx++; //idx 증가
+            }
+            answer += str[i];
+        }
+        return answer;
+    }
+}
+
+## 풀이
+s를 하나식 읽어오기 위해 String 배열에 s 를 넣고
+띄어쓰기마다 인덱스를 초기화해야하므로 idx 변수를 만들어주고 for문을 생성합니다.
+String 형은 == 사용시 null 참조 오류가 발생할 수 있으므로 equals로 비교하고 
+공백을 찾습니다. 공백이 있다면 idx는 0으로 초기화 합니다.
+idx가 짝수이면 toUpperCase(); 함수로 대문자로 변경하고 idx가 홀수이면 
+toLowerCase(); 함수로 소문자로 변경합니다. 이후 idx를 증가시켜 띄어쓰기
+이후 홀, 짝을 비교할 수 있도록 합니다.
+for문 루프가 한번식 돌기 전마다 str[i]를 answer 에 적용합니다.
+이런식으로 계속 루프가 돌면 문제에서 원하는 문자가 answer에 저장되고 
+answer을 return 합니다.
+
+
+
+# 22번 문제
+## 자릿수 더하기 
+
+## 문제 설명
+자연수 N이 주어지면, N의 각 자릿수의 합을 구해서 return 하는
+ solution 함수를 만들어 주세요.
+예를들어 N = 123이면 1 + 2 + 3 = 6을 return 하면 됩니다.
+
+## 제한사항
+N의 범위 : 100,000,000 이하의 자연수
+
+## 입출력 예
+  N	answer
+ 123	   6
+ 987	  24
+
+## 코드
+public class Solution {
+    public int solution(int n) {
+        String a = Integer.toString(n);
+        int sum = 0;
+        for(int i=0; i<a.length(); i++){
+            sum += a.charAt(i) - '0';
+        } System.out.println(sum);
+
+    }
+}
+
+## 풀이
+인트형을 문자열으로 바꾸고 subString으로 자른 후 int형으로 더하는 형식
+ ex) '0'=51 '3'=48
+
+
+
+# 23번 문제
+## 자연수 뒤집어 배열로 만들기
+
+## 문제 설명
+자연수 n을 뒤집어 각 자리 숫자를 원소로 가지는 배열 형태로 리턴해주세요. 
+예를들어 n이 12345이면 [5,4,3,2,1]을 리턴합니다.
+
+## 제한 조건
+n은 10,000,000,000이하인 자연수입니다.
+
+## 입출력 예
+   n	  return
+12345	[5,4,3,2,1]
+
+## 코드
+### 1
+class Solution {
+    public int[] solution(long n) {
+        String s = "" + n;
+        int[] answer = new int[s.length()];
+
+        for (int i = 0; i < s.length(); i++) {
+            answer[i] = s.charAt(s.length() - i - 1) - '0';
+        }
+
+        return answer;
+    }
+}
+
+### 2
+import java.util.*;
+
+class Solution {
+    public int[] solution(long n) {        
+        List<Integer> list = new ArrayList<>();
+
+        while(n != 0) {
+            list.add((int)(n % 10));
+            n /= 10;
+        }
+
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            answer[i] = list.get(i);
+        }
+        return answer;
+    }
+}
+
+## 풀이
+""와 n을 더해줌으로 문자열 s를 만들고
+answer배열을 s의 길이까지 만들어주고, s의 마지막 문자를 배열에 추가 후 리턴
+2번 문제를 통해 수학적 지식 좀 쌓자....
+
+:.sort 확인
+
+
+# @24번 문제
+## 정수 내림차순으로 배치하기
+
+## 문제 설명
+함수 solution은 정수 n을 매개변수로 입력받습니다. 
+n의 각 자릿수를 큰것부터 작은 순으로 정렬한 새로운 정수를 리턴해주세요. 
+예를들어 n이 118372면 873211을 리턴하면 됩니다.
+
+## 제한 조건
+n은 1이상 8000000000 이하인 자연수입니다.
+
+## 입출력 예
+   n	return
+118372	873211
+
+## 코드
+
+### 1 
+class Solution {
+    public long solution(long n) {
+        String s =""+n;
+        int [] ss = new int [s.length()];
+        for(int i=0; i<s.length(); i++){
+            ss[i] = s.charAt(i) - '0';
+        }
+        for (int i = 0; i < ss.length; i++) {
+
+            for (int j = i + 1; j < ss.length; j++) {
+
+                if (ss[i] < ss[j]) {
+                    int temp = ss[i];
+                    ss[i] = ss[j];
+                    ss[j] = temp;
+                }
+            }
+        }
+        int num = 0;
+        for(int digit:ss){
+            num*=10; num += digit;
+        }
+        return num;
+    }
+}
+
+2
+import java.util.Arrays;
+class Solution {
+    public long solution(long n) {
+        String s = String.valueOf(n); 
+        String ansnum= "";
+        Long answer;
+        char [] arr = new char[s.length()];
+        for(int i=0; i<s.length(); i++){
+            arr[i] +=s.charAt(i);
+        }
+        Arrays.sort(arr);
+        for(int i = arr.length-1; i>=0; i--){
+            ansnum+=arr[i];
+            System.out.println(ansnum);
+        }
+        answer = Long.parseLong(ansnum);
+
+        for(int i:arr){
+            System.out.println(i);
+        }
+        return answer;
+    }
+}
+
+## 풀이
+1번은 테스트는 통과했으나 채점에서 떨어졌다.
+2번 코드풀이는
+Line 1. 정수n을 String으로 변환
+Line 4. arr라는 문자배열을 n의 길이만큼 선언
+Line 6. n을 하나하나 쪼개 arr배열에 입력
+Line 8. Arrays.sort(arr)를 이용해 오름차순 정렬
+Line 10. for문을 이용해 마지막 인덱스부터 
+ansnum이라는 문자열에 '+'를 이용해 거꾸로 하나씩 붙여줌
+Line 13. 다시 정수로 변환
+
+
+# 25번 문제
+## 정수 제곱근 판별
+
+## 문제 설명
+임의의 양의 정수 n에 대해, n이 어떤 양의 정수 x의 제곱인지 아닌지 판단하려 합니다.
+n이 양의 정수 x의 제곱이라면 x+1의 제곱을 리턴하고, 
+n이 양의 정수 x의 제곱이 아니라면 -1을 리턴하는 함수를 완성하세요.
+
+## 제한 사항
+n은 1이상, 50000000000000 이하인 양의 정수입니다.
+
+## 입출력 예
+ n	return
+121	144
+ 3	-1
+
+## 코드
+
+class Solution {
+    public long solution(long n) {
+        long sqrRt = (long)Math.sqrt(n);
+
+        if (sqrRt * sqrRt == n) {
+            return (sqrRt + 1) * (sqrRt + 1);
+        }
+        else {
+            return -1;
+        }
+    }
+}
+ 
+## 풀이
+함수 Math.sqrt만 알면 쉽게 풀 수 있는 문제 제곱근을 구하고
+if문을 이용 구한 제곱근을 제곱시 n이 나오면 제곱근에+1하고 제곱
+아니면 -1 리턴
+
+###Math.
+ -pow:거듭제곱을 계산해주는 함수 (숫자,거듭제곱횟수);
+ -sqrt: 제곱근을 구하는 함수 (숫자);
+
+
+# @26번 문제
+## 제일 작은 수 제거하기
+
+## 문제설명
+정수를 저장한 배열, arr 에서 가장 작은 수를 제거한 배열을 리턴하는 함수, 
+solution을 완성해주세요. 단, 리턴하려는 배열이 빈 배열인 경우엔 
+배열에 -1을 채워 리턴하세요. 예를들어 arr이 [4,3,2,1]인 경우는 [4,3,2]를 리턴 하고, 
+[10]면 [-1]을 리턴 합니다.
+
+## 제한 조건
+arr은 길이 1 이상인 배열입니다.
+인덱스 i, j에 대해 i ≠ j이면 arr[i] ≠ arr[j] 입니다.
+
+## 입출력 예
+  arr	return
+[4,3,2,1]	[4,3,2]
+[10]	[-1]
+
+## 코드
+class Solution {
+    public int[] solution(int[] arr) {
+        int[] answer = {};
+        if(arr.length==1){
+            answer = new int[1];
+            answer[0] = -1;
+        }else{
+            answer = new int[arr.length-1];
+            int min = arr[0];
+            
+            for(int i=0; i<arr.length; i++){
+                min = Math.min(min, arr[i]);
+            }
+            int index = 0;
+            for(int i=0; i<arr.length; i++){
+                if(min == arr[i]){
+                    continue;
+                }
+                answer[index] = arr[i];
+                index++;
+            }
+        }
+        return answer;
+    }
+}
+
+## 풀이
+
+우선 arr.length==1 조건을 주어 answer에 -1의 값을 넣어주고, 
+그렇지 않을 경우 최소값을 빼서 저장하기 위해 answer의 길이는 
+arr.length-1로 지정하여 준다.
+Math.min함수를 사용하여 arr배열의 최소값을 구한 후 
+for문을 사용하여 최소값일 경우 continue를 사용하여 배열에 넣지않고 넘어간다. 
+아닐경우 answer에 값을 넣어준다.
+
+
+# 27번 문제
+## 콜라츠 추측
+
+## 문제 설명
+1937년 Collatz란 사람에 의해 제기된 이 추측은, 
+주어진 수가 1이 될 때까지 다음 작업을 반복하면, 모든 수를 1로 만들 수 있다는 추측입니다.
+작업은 다음과 같습니다.
+
+1-1. 입력된 수가 짝수라면 2로 나눕니다. 
+1-2. 입력된 수가 홀수라면 3을 곱하고 1을 더합니다. 
+2. 결과로 나온 수에 같은 작업을 1이 될 때까지 반복합니다. 
+예를 들어, 주어진 수가 6이라면 6 → 3 → 10 → 5 → 16 → 8 → 4 → 2 → 1 이 되어
+ 총 8번 만에 1이 됩니다. 위 작업을 몇 번이나 반복해야 하는지 반환하는 함수, 
+solution을 완성해 주세요. 단, 주어진 수가 1인 경우에는 0을, 
+작업을 500번 반복할 때까지 1이 되지 않는다면 –1을 반환해 주세요.
+
+## 제한 사항
+입력된 수, num은 1 이상 8,000,000 미만인 정수입니다.
+
+## 입출력 예
+   n	result
+   6	  8
+  16	  4
+626331   -1
+
+## 코드
+
+ class Solution {
+    public int solution(int num) {
+        long number = num;
+        int answer = 0;
+        for(answer = 0; answer < 500; answer++){
+            if(number == 1) return answer;
+            else{
+                if(number % 2 == 0) number /= 2;
+                else number = number * 3 + 1;
+            }
+        } 
+        return -1;
+    }
+}
+
+## 풀이 
+먼저 터지지 않도록 long으로 바꿔준다.
+폴문 조건을 i가 아닌 answer을 대입해서 반복시켜준다.
+if문으로 조건을 넣어주면 끝
+
+
+# 28번 문제
+## 하샤드 수
+
+## 문제 설명
+양의 정수 x가 하샤드 수이려면 x의 자릿수의 합으로 x가 나누어져야 합니다. 
+예를 들어 18의 자릿수 합은 1+8=9이고, 
+18은 9로 나누어 떨어지므로 18은 하샤드 수입니다. 
+자연수 x를 입력받아 x가 하샤드 수인지 아닌지 검사하는 함수, solution을 완성해주세요.
+
+## 제한 조건
+x는 1 이상, 10000 이하인 정수입니다.
+
+## 입출력 예
+arr	return
+10	true
+12	true
+11	false
+13	false
+
+## 코드
+int sum = 0;
+int a = x;
+      
+		while (a >= 1) {
+			sum += a % 10;
+			a /= 10;
+		}
+
+		if (x % sum == 0) {
+			return true;
+		} else
+			return false;
+  }
+}
+
+## 풀이
+각 자릿수 합을 구하기위해 while문 사용
+초기 숫자 x를 저장하고 있는 a변수 이용
+자릿수의 합을 저장해둘 변수 sum 생성
+while문 안에서, sum에 현재 a의 일의 자리를 더해주고(sum+a%10)
+a를 10으로 나눔
+while문 빠져나오고 x를 sum으로 나누어
+나머지가 0이면 true 아니면 false 리턴
+
+
+# 29
+## 두개 뽑아서 더하기
+
+## 문제 설명
+정수 배열 numbers가 주어집니다. numbers에서 서로 다른 인덱스에 있는 
+두 개의 수를 뽑아 더해서 만들 수 있는 모든 수를 배열에 오름차순으로 
+담아 return 하도록 solution 함수를 완성해주세요.
+
+## 제한사항
+numbers의 길이는 2 이상 100 이하입니다.
+numbers의 모든 수는 0 이상 100 이하입니다.
+
+## 입출력 예
+numbers	   result
+[2,1,3,4,1]	[2,3,4,5,6,7]
+[5,0,2,7]	[2,5,7,9,12]
+
+## 코드
+### 1.
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.HashSet;
+
+class Solution {
+    public int[] solution(int[] numbers) {
+     ArrayList<Integer> A = new ArrayList<Integer>();
+     // 더한 값을 저장할 List
+     ArrayList<Integer> integerN = 
+        (ArrayList<Integer>) Arrays.stream(numbers).boxed()
+            .collect(Collectors.toList());   // int 배열을 List로 변환
+        for(int i = 0; i < integerN.size(); i++ ){
+            for(int j = i+1; j < integerN.size(); j++ ){
+                A.add(integerN.get(i) + integerN.get(j));
+            }
+        } // for문으로 각 자리수 다 더하기
+        Set<Integer> set = new HashSet<Integer>(A);
+        List<Integer> newA = new ArrayList<Integer>(set);
+        // Set으로 변환시켜서 중복 제거, 다시 List로 변환
+
+        int[] newN = new int[newA.size()];
+        for(int i =0; i<newA.size(); i++){
+            newN[i] = newA.get(i).intValue();
+        } // 다른 함수 사용하지 않고 List를 int 배열의 값 넣어줌
+	짧게 말하면 List를 int 배열로 변환
+        Arrays.sort(newN); //오름차순 정렬
+
+        return newN;
+    }
+}
+
+### 2.
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+     public int[] solution(int[] numbers) {
+        Set<Integer> set = new HashSet<>();
+
+        for(int i=0; i<numbers.length; i++) {
+            for(int j=i+1; j<numbers.length; j++) {
+                set.add(numbers[i] + numbers[j]);
+            }
+        }
+
+        return set.stream().sorted().mapToInt(Integer::intValue).toArray();
+    }
+}
+
+## 여담
+어 처음으로 List를 이용하여 풀어봤는데
+그래서 그런지 코드가 너무 지저분하다..
+다풀고 2번 코드를 확인하고나서 내가 부족한 것이 많다는걸
+또 느꼈다
+
+
+# 30
+## 로또의 최고 순위와 최저 순위
+
+## 문제 설명
+로또 6/45(이하 '로또'로 표기)는 1부터 45까지의 숫자 중 6개를 찍어서 맞히는 대표적인 복권입니다. 
+아래는 로또의 순위를 정하는 방식입니다. 1
+
+순위	당첨 내용
+1	6개 번호가 모두 일치
+2	5개 번호가 일치
+3	4개 번호가 일치
+4	3개 번호가 일치
+5	2개 번호가 일치
+6(낙첨)	그 외
+로또를 구매한 민우는 당첨 번호 발표일을 학수고대하고 있었습니다. 
+하지만, 민우의 동생이 로또에 낙서를 하여, 일부 번호를 알아볼 수 없게 되었습니다. 
+당첨 번호 발표 후, 민우는 자신이 구매했던 로또로 당첨이 가능했던 
+최고 순위와 최저 순위를 알아보고 싶어 졌습니다.
+알아볼 수 없는 번호를 0으로 표기하기로 하고, 
+민우가 구매한 로또 번호 6개가 44, 1, 0, 0, 31 25라고 가정해보겠습니다. 
+당첨 번호 6개가 31, 10, 45, 1, 6, 19라면, 당첨 가능한 최고 순위와 최저 순위의 한 예는 아래와 같습니다.
+
+당첨 번호	31	10	45	1	6	19	결과
+최고 순위 번호	31	0→10	44	1	0→6	25	4개 번호 일치, 3등
+최저 순위 번호	31	0→11	44	1	0→7	25	2개 번호 일치, 5등
+
+순서와 상관없이, 구매한 로또에 당첨 번호와 일치하는 번호가 있으면 맞힌 걸로 인정됩니다.
+알아볼 수 없는 두 개의 번호를 각각 10, 6이라고 가정하면 3등에 당첨될 수 있습니다.
+3등을 만드는 다른 방법들도 존재합니다. 하지만, 2등 이상으로 만드는 것은 불가능합니다.
+알아볼 수 없는 두 개의 번호를 각각 11, 7이라고 가정하면 5등에 당첨될 수 있습니다.
+5등을 만드는 다른 방법들도 존재합니다. 하지만, 6등(낙첨)으로 만드는 것은 불가능합니다.
+민우가 구매한 로또 번호를 담은 배열 lottos, 
+당첨 번호를 담은 배열 win_nums가 매개변수로 주어집니다. 
+이때, 당첨 가능한 최고 순위와 최저 순위를 차례대로 배열에 담아서
+return 하도록 solution 함수를 완성해주세요.
+
+## 제한사항
+lottos는 길이 6인 정수 배열입니다.
+lottos의 모든 원소는 0 이상 45 이하인 정수입니다.
+0은 알아볼 수 없는 숫자를 의미합니다.
+0을 제외한 다른 숫자들은 lottos에 2개 이상 담겨있지 않습니다.
+lottos의 원소들은 정렬되어 있지 않을 수도 있습니다.
+win_nums은 길이 6인 정수 배열입니다.
+win_nums의 모든 원소는 1 이상 45 이하인 정수입니다.
+win_nums에는 같은 숫자가 2개 이상 담겨있지 않습니다.
+win_nums의 원소들은 정렬되어 있지 않을 수도 있습니다.
+
+## 입출력 예
+lottos	                   win_nums	            result
+[44, 1, 0, 0, 31, 25]	 [31, 10, 45, 1, 6, 19]	[3, 5]
+[0, 0, 0, 0, 0, 0]	 [38, 19, 20, 40, 15, 25]	[1, 6]
+[45, 4, 35, 20, 3, 9]	 [20, 9, 3, 45, 4, 35]  	[1, 1]
+
+## 코드
+### 1.
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int[] rank = {7,7}; //최종 출력값 배열
+
+        for(int i = 0; i < lottos.length; i++){
+            if(lottos[i] == 0){
+                rank[0] -= 1; //for문으로 i 번째가 0일때 rank[0] -1
+            }
+            for(int j = 0; j<lottos.length; j++){
+                if(lottos[i]==win_nums[j]){
+                    rank[0] -= 1;
+                    rank[1] -= 1;  
+                }
+            }
+        } // 이중 for문으로 i == j 확인, 맞을시 rank -1
+
+        if(rank[0] == 7){
+            rank[0] = 6;
+        }if(rank[1] == 7){
+            rank[1] = 6;
+        } //조건문으로 한번도 차감안된 열은 6으로 수정
+    return rank;
+    }
+}
+
+### 2.
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int zero = 0;
+        int matched = 0;
+        for (int l : lottos) {
+            if (l == 0) {
+                zero++;
+            } else {
+                for (int w : win_nums) {
+                    if (l == w) {
+                        matched++;
+                        break;
+                    }
+                }
+            }
+        }
+        int min = matched;
+        int max = matched + zero;
+        int[] answer = {Math.min(7 - max, 6), Math.min(7 - min, 6)};
+        return answer;
+    }
+}
+
+## 여담
+개인적으로 푸는내내 재밋있게 느껴지는 문제였다.
+
+
+# 31
+## 모의고사
+
+## 문제 설명
+수포자는 수학을 포기한 사람의 준말입니다. 
+수포자 삼인방은 모의고사에 수학 문제를 전부 찍으려 합니다. 
+수포자는 1번 문제부터 마지막 문제까지 다음과 같이 찍습니다.
+
+1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ...
+2번 수포자가 찍는 방식: 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, ...
+3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, ...
+
+1번 문제부터 마지막 문제까지의 정답이 순서대로 들은 배열 answers가 주어졌을 때, 
+가장 많은 문제를 맞힌 사람이 누구인지 배열에 담아 return 하도록 solution 함수를 작성해주세요.
+
+## 제한 조건
+시험은 최대 10,000 문제로 구성되어있습니다.
+문제의 정답은 1, 2, 3, 4, 5중 하나입니다.
+가장 높은 점수를 받은 사람이 여럿일 경우, return하는 값을 오름차순 정렬해주세요.
+
+## 입출력 예
+answers	return
+[1,2,3,4,5]	  [1]
+[1,3,2,4,2]	[1,2,3]
+
+## 코드
+class Solution {
+    public static int[] solution(int[] answers) {
+        int[] answer;
+        
+        int[] a = new int[]{1,2,3,4,5};
+        int[] b = new int[]{2,1,2,3,2,4,2,5};
+        int[] c = new int[]{3,3,1,1,2,2,4,4,5,5};
+        
+        int[] score = new int[3];
+
+        // score[]에 수포자별 맞힌 갯수
+        for(int i=0; i<answers.length; i++){
+            if(answers[i] == a[i%5])  score[0]++; 
+            if(answers[i] == b[i%8])  score[1]++;
+            if(answers[i] == c[i%10]) score[2]++;
+        }
+        
+        // 가장 높은 점수
+        int max = 0;
+        for(int i=0; i<3; i++){
+            if(score[i] > max){ max = score[i]; }
+        }
+        
+        // 가장 높은 점수를 받은 사람 수
+        int maxCount = 0;
+        for(int i=0; i<3; i++){
+            if(score[i] == max){ maxCount++; } 
+        }
+
+        answer = new int[maxCount];
+        int idx = 0;
+        for(int i=0; i<3; i++){
+            if(score[i] == max) answer[idx++] = i+1;
+        }
+        return answer;
+    }
+}
+
+## 여담
+이건 배열반복시키는 부분을 잘몰라서
+풀이를 볼 수밖에없었다. 정말 수학을 어느정도는 해야겠구나.
+수학의 중요성을 다시 느꼈다. 반복을 i%(해당 열 수)로 시킨다니..
+물론 2차원 배열에는 안통할것 같지만 좋은 방법을 또 알았다.
+
+
+
+# 32
+## 문자열 내 마음대로 정렬하기
+
+## 문자열로 구성된 리스트 strings와, 정수 n이 주어졌을 때, 
+각 문자열의 인덱스 n번째 글자를 기준으로 오름차순 정렬하려 합니다. 
+예를 들어 strings가 ["sun", "bed", "car"]이고 n이 1이면 
+각 단어의 인덱스 1의 문자 "u", "e", "a"로 strings를 정렬합니다.
+
+## 제한 조건
+strings는 길이 1 이상, 50이하인 배열입니다.
+strings의 원소는 소문자 알파벳으로 이루어져 있습니다.
+strings의 원소는 길이 1 이상, 100이하인 문자열입니다.
+모든 strings의 원소의 길이는 n보다 큽니다.
+인덱스 1의 문자가 같은 문자열이 여럿 일 경우, 사전순으로 앞선 문자열이 앞쪽에 위치합니다.
+
+## 입출력 예
+strings	n	return
+["sun", "bed", "car"]	1	["car", "bed", "sun"]
+["abce", "abcd", "cdx"]	2	["abcd", "abce", "cdx"]
+
+## 코드
+
+import java.util.Arrays;
+
+class Solution {
+    public String[] solution(String[] strings, int n) {
+        String a = "";
+        String [] b = new String[strings.length]; //정렬한 값 넣어줄 배열 
+   				         // 나중 확인결과 굳이 만들필요없었다.
+
+        for(int i =0; i<strings.length;i++){
+            a = strings[i].substring(n,n+1);
+            a += strings[i];
+            strings[i] = a;
+        } // 반복문을 통해 n의 해당하는 글자를 앞으로 빼고 더해줌
+
+        Arrays.sort(strings); // 배열 오름차순으로 맞춤
+
+        for(int i =0; i<strings.length; i++){
+            b[i] = strings[i].substring(1); 
+        } // substring을 통해 앞글자를 떼고 b의 그대로 넣어줌 
+
+        return b;
+    }
+}
+
+## 여담
+어느정도 풀어서 그런지 막힘없이 풀렸다.
+발을 내딛 느낌이 들어서 설렐 수 밖에 없었다.
+나중에 확인해보니 b를 만들필요없이
+strings에 바로 넣어줄 수 있었다.
+
+
+
+# 33
+## 문자열 내림차순으로 배치하기
+
+## 문제 설명
+문자열 s에 나타나는 문자를 큰것부터 작은 순으로 정렬해 새로운 문자열을 리턴하는 함수, 
+solution을 완성해주세요.
+s는 영문 대소문자로만 구성되어 있으며, 대문자는 소문자보다 작은 것으로 간주합니다.
+
+## 제한 사항
+str은 길이 1 이상인 문자열입니다.
+
+## 입출력 예
+      s	              return
+"Zbcdefg"	"gfedcbZ"
+
+## 코드
+import java.util.Arrays;
+import java.util.Collections;
+
+class Solution {
+    public String solution(String s) {
+        // 1. 문자열 배열의 인덱스별로 각 문자를 저장.
+        String answer[] = s.split("");
+        
+        // 2. 출력을 위한 변수
+        String str="";
+        
+        // 3. Arrays.sort()메소드의 Collections.reverseOrder()메소드를 사용해 역순정렬.
+        Arrays.sort(answer,Collections.reverseOrder());
+        
+        // 4. 출력 데이터 생성.
+        for(int i=0;i<answer.length;i++){
+            str+=answer[i];
+        }
+        
+        return str;
+    }
+}
+
+## 여담
+
+
+
+
+
+
+# 34
+## 약수의 개수와 덧셈
+## 문제 설명
+두 정수 left와 right가 매개변수로 주어집니다. 
+left부터 right까지의 모든 수들 중에서, 약수의 개수가 짝수인 수는 더하고, 
+약수의 개수가 홀수인 수는 뺀 수를 return 하도록 solution 함수를 완성해주세요.
+
+## 제한사항
+1 ≤ left ≤ right ≤ 1,000
+
+## 입출력 예
+left	right	result
+13	17	43
+24	27	52
+
+## 코드
+
+class Solution {
+    public int solution(int left, int right) {
+        int answer = 0;
+        
+        for(int i = left; i <= right; i++) {
+            int cnt = 0;
+            
+            for(int j = 1; j <= i; j++) {
+                if(i % j == 0) cnt++;
+            }
+	//이중for문으로 j를 1부터 i까지 순회하여 i를 j로 나누어 떨어질 경우 cnt 증가
+		
+            
+            if(cnt % 2 == 0) answer += i;
+            else answer -= i;
+        }
+	// cnt를 2로 나누어서 나머지가 0일경우 짝수 아닐경우 홀수 확인하고 그 경우에 따라
+	+-를 더한 i를 int answer에 입력하면 끝
+        
+        return answer;
+    }
+}
+
+## 여담
+생각을 좀 더 해봤으면 좋았을텐데
+그게 아쉽다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

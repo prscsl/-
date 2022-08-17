@@ -1,0 +1,76 @@
+# 29
+## 두개 뽑아서 더하기
+
+## 문제 설명
+정수 배열 numbers가 주어집니다. numbers에서 서로 다른 인덱스에 있는 
+두 개의 수를 뽑아 더해서 만들 수 있는 모든 수를 배열에 오름차순으로 
+담아 return 하도록 solution 함수를 완성해주세요.
+
+## 제한사항
+numbers의 길이는 2 이상 100 이하입니다.
+numbers의 모든 수는 0 이상 100 이하입니다.
+
+## 입출력 예
+numbers	   result
+[2,1,3,4,1]	[2,3,4,5,6,7]
+[5,0,2,7]	[2,5,7,9,12]
+
+## 코드
+### 1.
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.HashSet;
+
+class Solution {
+    public int[] solution(int[] numbers) {
+     ArrayList<Integer> A = new ArrayList<Integer>();
+     // 더한 값을 저장할 List
+     ArrayList<Integer> integerN = 
+        (ArrayList<Integer>) Arrays.stream(numbers).boxed()
+            .collect(Collectors.toList());   // int 배열을 List로 변환
+        for(int i = 0; i < integerN.size(); i++ ){
+            for(int j = i+1; j < integerN.size(); j++ ){
+                A.add(integerN.get(i) + integerN.get(j));
+            }
+        } // for문으로 각 자리수 다 더하기
+        Set<Integer> set = new HashSet<Integer>(A);
+        List<Integer> newA = new ArrayList<Integer>(set);
+        // Set으로 변환시켜서 중복 제거, 다시 List로 변환
+
+        int[] newN = new int[newA.size()];
+        for(int i =0; i<newA.size(); i++){
+            newN[i] = newA.get(i).intValue();
+        } // 다른 함수 사용하지 않고 List를 int 배열의 값 넣어줌
+	짧게 말하면 List를 int 배열로 변환
+        Arrays.sort(newN); //오름차순 정렬
+
+        return newN;
+    }
+}
+
+### 2.
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+     public int[] solution(int[] numbers) {
+        Set<Integer> set = new HashSet<>();
+
+        for(int i=0; i<numbers.length; i++) {
+            for(int j=i+1; j<numbers.length; j++) {
+                set.add(numbers[i] + numbers[j]);
+            }
+        }
+
+        return set.stream().sorted().mapToInt(Integer::intValue).toArray();
+    }
+}
+
+## 여담
+어 처음으로 List를 이용하여 풀어봤는데
+그래서 그런지 코드가 너무 지저분하다..
+다풀고 2번 코드를 확인하고나서 내가 부족한 것이 많다는걸
+또 느꼈다
